@@ -1,33 +1,31 @@
-// require router from express - activity 21 and 22, specifically in the routes in activity 22
 const api = require('express').Router();
-// require store from the helpers folder 
+
 const store = require('../helpers/store')
-// GET ALL THE NOTES //
+// retrieve the notes
 api.get('/notes', (req, res) => {
     console.log(('GET /api/notes'));
     store.getNotes().then((notes) => {
         res.json(notes)
     })
-
-    //return all saved notes as json
-
-    // getNotes()
-    // then take the notes and return them with res.json
 })
 
-// POST A NEW NOTE //
-api.post('/api/notes', (req, res) => {
-    store
-    // addNote(req.body)
-    // then return note with res.json
+// post a new note
+api.post('/notes', (req, res) => {
+    console.log('POST /api/notes');
+    store.addNote(req.body);
+    res.json(req.body);
+    return;
 })
 
-// DELETE A NOTE //
-api.delete('notes/:id', (req, res) => {
-    store
-    // removeNote(req.params.id)
-    // give a status letting you know it's been deleted
+// delete note
+api.delete('/notes/:id', (req, res) => {
+    console.log(`${req.method} called for /api/notes`);
+    if (!res) {
+        console.log('err');
+    } else {
+        store.removeNote(req.params.id);
+        res.status('Note deleted');
+    }
 })
 
-// export your router
 module.exports = api;

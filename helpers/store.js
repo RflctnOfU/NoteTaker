@@ -27,22 +27,28 @@ class Store {
 
     addNote(note) {
         const { title, text } = note;
-
-        const newNote = { title, text, id: uuid() }; // give note an id
-
-        // get all notes with getNotes()
-        write(this.getNotes().push(note))
-        // then add new note to them
-        // then take the updated set of notes - write them to the file using write()
-        console.log(newNote);
-        return newNote;
-        // then show the new note
+        // give note an id
+        const newNote = { title, text, id: uuid() };
+        newNote.title = title;
+        newNote.text = text;
+        this.getNotes().then((data) => {
+            data.push(newNote);
+            this.write(data);
+        })
     }
 
     removeNote(id) {
-        // get all the notes use getNotes()
-        // then go through the notes to find the one with the matching id
-        // take these updated/filtered notes - write them to file using write()
+        return this.getNotes()
+            .then((notes) => {
+                for (let i = 0; i < notes.length; i++) {
+                    if (id === notes[i].id) {
+                        notes.splice(i, 1)
+                        return notes;
+                    }
+                }
+            }).then((filtered) => {
+                this.write(filtered)
+            });
     }
 }
 
