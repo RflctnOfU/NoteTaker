@@ -8,7 +8,7 @@ const htmlRoutes = require('./routes/htmlRoutes');
 // initialize the app
 const app = express();
 // create a port - reference server.js files from activities in this module
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 // set up body parsing, static, and route middleware - activities 15 and 16
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

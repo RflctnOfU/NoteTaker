@@ -20,7 +20,8 @@ class Store {
     getNotes() {
         return this.read().then((notes) => {
             // parse the notes and return them
-            JSON.parse(notes);
+            const oldNotes = JSON.parse(notes)
+            return oldNotes;
         })
     }
 
@@ -33,6 +34,7 @@ class Store {
         write(this.getNotes().push(note))
         // then add new note to them
         // then take the updated set of notes - write them to the file using write()
+        console.log(newNote);
         return newNote;
         // then show the new note
     }

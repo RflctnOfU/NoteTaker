@@ -3,9 +3,13 @@ const api = require('express').Router();
 // require store from the helpers folder 
 const store = require('../helpers/store')
 // GET ALL THE NOTES //
-api.get('/api/notes', (req, res) => {
-    store.getNotes();//fetch db.json
-    res.json()//return all saved notes as json
+api.get('/notes', (req, res) => {
+    console.log(('GET /api/notes'));
+    store.getNotes().then((notes) => {
+        res.json(notes)
+    })
+
+    //return all saved notes as json
 
     // getNotes()
     // then take the notes and return them with res.json
